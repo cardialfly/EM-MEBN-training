@@ -19,9 +19,9 @@ public class Main {
 	    
 	    //Tsamiko untrained MEBN.
 	    //----->For usage of other MEBNs change the folders and file names accordingly.
-	    String MEBNfile="C:/Users/gchantas/Desktop/MEBN_training/MEBNmodel/MEBNMultimodalTsamikoUntrained.ubf";
-	    String  PLMfolder="C:/Users/gchantas/Desktop/MEBN_training/TsamikoPLMs";
-	    String MEBNoutput="C:/Users/gchantas/Desktop/MEBN_training/MEBNmodel/TsamikoTrained";
+	    String MEBNfile="models/MEBNmodel/MEBNMultimodalTsamikoUntrained.ubf";
+	    String  PLMfolder="models/TsamikoPLMs";
+	    String MEBNoutput="models/MEBNmodel/TsamikoTrained";
 	    	    
 	    String queryvariablename="step";
 	    
