@@ -39,9 +39,19 @@ public class Main {
 	    //for(generalIter=11;generalIter<=FileNumber+1;generalIter++)
 	   mr = new MEBNReasoning();
 	    //Tsamiko MEBN inference method. Run this to see results of the inference. MEBN file and test data file are defined in the method
-	   int training=0;
-	   System.out.println("Give 1 for training and 0 for inference:");
-	   training= System.in.read();
+	   int training = -1;
+	   if (args != null && args.length > 0) {
+		   try {
+			   System.out.println("Reading training (1) or inference (0) setup from argument: " + args[0]);
+			   training = Integer.parseInt(args[0]);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+	   }
+	   if (training < 0) {
+		   System.out.println("Give 1 for training and 0 for inference:");
+		   training= Character.getNumericValue(System.in.read());
+	   }
 
 	   if(training==0)
 	   {
