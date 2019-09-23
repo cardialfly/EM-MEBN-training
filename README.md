@@ -1,4 +1,9 @@
-# EM-MEBN-training
+# EM-MEBN-training plug-in
+
+This is a port/adapter of EM-MEBN-training software to a plug-in of UnBBayes.
+
+
+## EM-MEBN-training
 
 EM MEBN training in Java, using unbbayes libraries. Used in the [Chantas et al 2018 paper published by ACM Journal of Computing for Cultural Heritage](https://dl.acm.org/citation.cfm?id=3131610).
 
