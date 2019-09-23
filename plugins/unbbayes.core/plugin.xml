@@ -1,0 +1,191 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<plugin id="unbbayes.util.extension.core" version="4.11.4"
+    class="unbbayes.util.extension.PluginCore">
+    <runtime>
+        <library id="core" path="/" type="code">
+            <export prefix="*" />
+        </library>
+    </runtime>
+    <!-- Module extension point.
+    	 UnBBayes' modules are basically new internal frames which are started when toolbars or menu are chosen.
+    	 Hot plug is enabled.
+    	 This extension point must extend unbbayes.util.extension.UnBBayesModule and provide the following informations:
+    	 	class: full class name. It must extend unbbayes.util.extension.UnBBayesModule and provide a default constructor
+    	 							(a constructor with no parameters) if factoryClass is not provided.
+    	    builder: a class to instantiate the module. It must implement  unbbayes.util.extension.UnBBayesModuleBuilder.
+    	    			  Use this field if "class" cannot provide a plausible default constructor.
+    	 	name: name of the functionality. It must be unique. If null, unbbayes.util.extension.UnBBayesModule#getModuleName() 
+    	 	              or unbbayes.util.extension.UnBBayesModuleBuilder will be used.
+    	 	description: tool tip text. Currently, no localization is supported.
+    	 	icon: icon (image) to be used at the tool bar's button. 
+    	 	category: this is a name read by UnBBayes in order to categorize a module.
+    	 	          currently, the default values are: 
+    	 	          			- none (no definition or empty) or "plugins": the module's menu will be added to "plugin" menu; 
+    	 	          			- "bn": the button will be added into "new" tool bar and the module's menu will be added into "new" menu;
+    	 	          			- "tool": the module's menu will be added into "tool" menu; 
+    	 	          			- "sampling": the module's menu will be added into "sampling" menu;
+    	 	          			- user-defined (any category not listed above): the module's menu will be added into a new menu, but no localization support
+    	 	          			              will be availabe.
+    -->
+    <extension-point id="Module">
+        <parameter-def id="class"/>
+        <parameter-def id="builder" multiplicity="none-or-one" />
+        <parameter-def id="name" multiplicity="none-or-one" />
+		<parameter-def id="description" multiplicity="none-or-one" />
+		<parameter-def id="icon" multiplicity="none-or-one" />
+		<parameter-def id="category" multiplicity="none-or-one" />
+    </extension-point>
+    
+    <!-- BN inference algorithm extension point and its option panel. 
+    	 Hot plug is enabled.
+    	 This extension point is a swing JPanel used as a form in order to fill in some initialization attributes for inference algorithms.
+    	 Inference algorithm are basically called during BN compilation.
+    	 This extension point must extend unbbayes.util.extension.bn.inference.InferenceAlgorithmOptionPanel and provide the following informations:
+    	 	class: full class name. It must extend unbbayes.util.extension.bn.inference.InferenceAlgorithmOptionPanel and provide a default constructor
+    	 							(a constructor with no parameters).
+		 The unbbayes.util.extension.bn.inference.InferenceAlgorithmOptionPanel is just a swing JPanel
+ 		 having a reference to unbbayes.util.extension.bn.inference.IInferenceAlgorithm, which implements the algorithm itself (similar to bridge pattern)
+    -->
+    <extension-point id="InferenceAlgorithm">
+        <parameter-def id="class"/>
+    </extension-point>
+     <!-- Probabilistic Network I/O extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes implementing
+    	 unbbayes.io.BaseIO, in order to add new IO functions into basic PN
+    	 module. The class must contain a public default constructor (no parameters)
+    	 Please, note that this is different from Module extension point. Module extension point
+    	 adds a pair of IO and Module (IO routines and a whole module in order to treat those files),
+    	 but this (PNIO) extension point adds a new IO routine into the basic PN (Probabilistic Network)
+    	 module, which is already incorporated into core.
+    	 	Parameters:
+    	 		class: this is the class to implement unbbayes.io.BaseIO. It MUST have a default constructor
+    	 			   with no parameters.
+    	 	    name: this is basically what an user will see when a conflict occurs 
+    	 	          (when more than 1 class can handle a given file).
+    -->
+    <extension-point id="PNIO">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+    </extension-point>
+    <!-- 
+    	 ResourceBundle extension point. 
+    	 Hot plug is partially implemented (resource bundles already loaded are not replaced, but we
+    	 can load new resource bundles by pressing the "Reload Plugin" option).
+    	 This extension point is basically a set of different ResourceBundle, in order to implement
+    	 localization (add new languages) using plugins.
+    	 The classes must extend java.util.ListResourceBundle, respect package position,
+    	 have a correct name (<NameOfTheExtendedResourceClass>_<LocaleID>),
+    	 and feature the keys expected by each correspondent base resource.
+    	 	Ex. If we intend to extend unbbayes.gui.oobn.resources.OOBNGuiResource for japanese support 
+    	 	(locale ID is "ja"), we must create unbbayes.gui.oobn.resources.OOBNGuiResource_ja 
+    	 	and fill the following keys using japanese messages:
+    	 		OOBNPopupMenuMessage, changeNodeToPrivate, changeNodeToOutput, changeNodeToInput
+    	 		OOBNPopupMenuTooltipMessage, openClassFromFile, ErrorLoadingClass, editionToolTip,
+    	 		removeToolTip, newToolTip, newFromFileToolTip, status, newOOBNClass, renameClass,
+    	 		oobnFileFilter, NoClassSelected, compilationError, DuplicatedClassName, 
+    	 		CannotDragNDrop, dragNDropToAddInstance, compileToolTip, statusReadyLabel, 
+    	 		classNavigationPanelLabel, leftClickToChangeNodeType, changeNodeType, saveTitle, 
+    	 		unsupportedGraphFormat, ...    	 	
+    -->
+    <extension-point id="ResourceBundle">
+        <parameter-def id="class"/>
+    </extension-point>
+    
+    <!-- 
+    	 PluginNode extension point. 
+    	 Hot plug is enabled.
+    	 This extension point basically declares a new node type for BN module and a set of additional informations
+    	 in order to show this node within GUI. Please note that I/O and/or inference algorithms must be implemented 
+    	 separately (see PNIO and InferenceAlgorithm extension points) as a dependent plugin, in order to
+    	 make it possible to compile or save a network containing these new node types.
+    	 
+    	 The arguments are basically:
+    	 	class: class of a node implementing unbbayes.prs.extension.IPluginNode. 
+    	 	       If so, the class must provide a default constructor with no arguments.
+    	 	       
+    	 	       This parameter may also be a builder extending unbbayes.prs.builder.extension.PluginNodeBuilder
+    	 	       or implementing unbbayes.prs.builder.INodeBuilder. In such case, the builded node must be a instance
+    	 	       of unbbayes.prs.extension.IPluginNode. This approach is useful if the node class does not
+    	 	       provide a default constructor with no arguments. The builder itself must provide a default constructor
+    	 	       with no arguments.
+    	 	       
+    	 	shapeClass: class implementing unbbayes.draw.extension.IPluginUShape, used in order to draw a node into canvas. 
+    	 		   In this case, it must provide a default constructor with no arguments.
+    	 	           	 	       
+    	 	       This parameter may also be a builder implementing unbbayes.draw.extension.IPluginUShapeBuilder.
+    	 	       In this case, the builded node must be a instance
+    	 	       of unbbayes.draw.extension.IPluginUShape. This approach is useful if the shape class does not
+    	 	       provide a default constructor with no arguments. The builder itself must provide a default constructor
+    	 	       with no arguments.
+    	 	       
+    	 	name: the name of the new node type. This is going to be used as a label.
+    	 	
+    	 	panelBuilder: class implementing unbbayes.gui.table.extension.IProbabilityFunctionPanelBuilder. This is basically
+    	 	      a class holding a swing JPanel, displayed to the user in order to edit this node's information, such as
+    	 	      probability distribution functions and other specific details.
+    	 	       
+    	 	description: a brief description of a node type. This is going to be used a tool tip text.
+    	 	       
+    	 	icon: an image (usually gif or png) to be used as an icon. This will be used for buttons.
+    	 	      if not set, a default icon will be used.
+    	 	       
+    	 	cursor: an image (usually gif or png) to be used as a cursor when this new node type
+    	 	      is being selected by the user. The upper left corner (point x = 0, y = 0) will 
+    	 	      be marked as the active point. If not set, a default cursor will be used.
+    	 	
+    -->
+    <extension-point id="PluginNode">
+        <parameter-def id="class"/>
+        <parameter-def id="shapeClass"/>
+        <parameter-def id="name"/>
+		<parameter-def id="panelBuilder"/>
+		<parameter-def id="description" multiplicity="none-or-one" />
+		<parameter-def id="icon" multiplicity="none-or-one" />
+		<parameter-def id="cursor" multiplicity="none-or-one" />
+    </extension-point>
+    
+    
+    <!-- 
+    	 ProbabilityFunctionPanel extension point. 
+    	 Hot plug is enabled.
+    	 This extension point is similar to PluginNode extension point. It basically
+    	 declares a set of panelBuilder for nodes that are already incorporated into core
+    	 (e.g. ProbabilisticNode, DecisionNode...),
+    	 so that multiple format of conditional probability function's becomes possible
+    	 for a pre-existing node type.
+    	 Because the node-type is already incorporated into core, less informations
+    	 are needed and data-types are already bound to core's datatypes (so,
+    	 this is less flexible than PluginNode extension point).
+		 Please note that you may need to implement new I/O plugin
+    	 separately (see PNIO extension point) as a dependent plugin, in order to
+    	 make it possible to save the content of any information filled by a user
+    	 inside this special type of probability function declaration (e.g. save
+    	 the script content if a function is declared as scripts).
+    	 
+    	 The arguments are basically:
+    	 	class: class of a node. This parameter is used in order to identify what kind of nodes
+    	 	       can use the panelBuilder. Obviously, if this class does not exist within core, it will
+    	 	       be naturally ignored.
+    	 	           	 	       
+    	 	name: the name of the panel. This is going to be used as a label for the panel
+    	 	
+    	 	panelBuilder: class implementing unbbayes.gui.table.extension.IProbabilityFunctionPanelBuilder. This is basically
+    	 	      a class holding a swing JPanel, displayed to the user in order to edit this node's information, such as
+    	 	      probability distribution functions and other specific details.
+    	 	       
+    	 	description: a brief description of the panel. This is going to be used a tool tip text.
+    	 	       
+    	 	icon: an image (usually gif or png) to be used as an icon. This will be used tab's icons.
+    	 	      if not set, an empty will be used.
+    	 	       
+    -->
+    <extension-point id="ProbabilityFunctionPanel">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+		<parameter-def id="panelBuilder"/>
+		<parameter-def id="description" multiplicity="none-or-one" />
+		<parameter-def id="icon" multiplicity="none-or-one" />
+    </extension-point>
+</plugin>

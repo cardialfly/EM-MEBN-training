@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<!-- This is one of 3 basic I/O modules for the core (PN module). At least one must be present in order
+     to use I/O for PN module -->
+<plugin id="unbbayes.io.NetIO" version="1.0.0">
+    <requires>
+        <import plugin-id="unbbayes.util.extension.core"/>
+    </requires>
+    <extension plugin-id="unbbayes.util.extension.core" point-id="PNIO" id="NetIO">
+        <parameter id="class" value="unbbayes.io.NetIO" />
+        <parameter id="name" value="NET" />
+    </extension>
+</plugin>
