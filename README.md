@@ -1,7 +1,6 @@
 # EM-MEBN-training
 
-EM MEBN training in Java, using unbbayes libraries. Used in the Chantas et al 2018 paper published by ACM Journal of Computing for Cultural Heritage.
-Go to Readme file of MEBNLearningInference_9_2019 for more information about its usage.
+EM MEBN training in Java, using unbbayes libraries. Used in the [Chantas et al 2018 paper published by ACM Journal of Computing for Cultural Heritage](https://dl.acm.org/citation.cfm?id=3131610).
 
 
 This Java - Eclipse project implements the learning and inference MEBN algorithm and it was used for the experiments presented in deliverable D4.1. 

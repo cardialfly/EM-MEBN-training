@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<!-- This is the plugin descriptor for EM-MEBN-training. -->
+<plugin id="EM-MEBN-training" version="0.0.1">
+    <requires>
+        <import plugin-id="unbbayes.util.extension.core" />
+        <import plugin-id="unbbayes.prs.mebn" />
+    </requires>
+    <runtime>
+       	<!-- Because dist.xml creates the resources folder, we must include it -->
+        <library type="resources" path="resources/" id="resources">
+        	<export prefix="*"/>
+        </library>
+        <library type="code" path="lib/" id="lib">
+        	<!-- This is where protege resources resides -->
+        	<export prefix="*"/>
+        </library>
+        <!-- It seems that loaders does not work as expected on jar files -->
+        <!-- If you change/add the libraries, change/add these library declaration too -->
+        <library id="EM-MEBN-training" path="EM-MEBN-training-0.0.1.jar" type="code" >
+        	<export prefix="*"/>
+        </library>
+    </runtime>
+    
+    <!-- Extension point to trigger EM-MEBN-training as a wizard -->
+    <extension plugin-id="unbbayes.util.extension.core" point-id="Module" id="EM-MEBN-training">
+        <parameter id="class" value="unbbayes.gui.mebn.extension.EMMEBNModule" />
+        <parameter id="builder" value="unbbayes.gui.mebn.extension.EMMEBNModule" />
+        <parameter id="name" value="EM-MEBN-training" />
+		<parameter id="description" value="EM MEBN training in UnBBayes" />
+		<parameter id="icon" value="em-mebn.png" />
+		<parameter id="category" value="sampling" />
+    </extension>
+</plugin>

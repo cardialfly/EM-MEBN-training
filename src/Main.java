@@ -1,4 +1,5 @@
-import java.io.File;
+
+import unbbayes.prs.mebn.em.MEBNReasoning;
 
 
 public class Main {
@@ -20,8 +21,8 @@ public class Main {
 	    //Tsamiko untrained MEBN.
 	    //----->For usage of other MEBNs change the folders and file names accordingly.
 	    String MEBNfile="models/MEBNmodel/MEBNMultimodalTsamikoUntrained.ubf";
-	    String  PLMfolder="models/TsamikoPLMs";
-	    String MEBNoutput="models/MEBNmodel/TsamikoTrained";
+	    String  PLMfolder="models/TsamikoPLMs/";
+	    String MEBNoutput="models/MEBNmodel/TsamikoTrained/";
 	    	    
 	    String queryvariablename="step";
 	    

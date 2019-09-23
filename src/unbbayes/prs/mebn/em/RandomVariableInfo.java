@@ -1,3 +1,4 @@
+package unbbayes.prs.mebn.em;
 
 
 public class RandomVariableInfo {

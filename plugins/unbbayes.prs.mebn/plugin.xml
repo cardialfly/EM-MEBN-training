@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<!-- This is the plugin descriptor for UnBBayes' MEBN module. -->
+<plugin id="unbbayes.prs.mebn" version="1.13.11">
+    <requires>
+        <import plugin-id="unbbayes.util.extension.core"/>
+    </requires>
+    <runtime>
+        <library type="resources" path="icons/" id="icons">
+        	<export prefix="*"/>
+        </library>
+        <library type="resources" path="resources/" id="resources">
+        	<!-- This is where pr-owl definitions resides -->
+        	<export prefix="*"/>
+        </library>
+        <!-- It seems that loaders does not work as expected on jar files -->
+        <!-- If you change/add the libraries, change/add these library declaration too -->
+        <library id="unbbayes.prs.mebn" path="unbbayes.prs.mebn-1.13.11.jar" type="code" >
+        	<export prefix="*"/>
+        </library>
+        <library id="iri" path="lib/iri-2.4.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="jena" path="lib/jena-2.4.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="powerloom" path="lib/powerloom-1.0.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="stella" path="lib/stella-1.0.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="protege" path="lib/protege-3.2.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="protege-owl" path="lib/protege-owl-3.2.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="xercesImpl" path="lib/xercesImpl-2.8.1.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+    </runtime>
+    <!-- Multi-Entity Bayesian Network I/O extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes implementing
+    	 unbbayes.io.BaseIO, in order to add new IO functions into this MEBN
+    	 module. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is the class to implement unbbayes.io.BaseIO. It MUST have a default constructor
+    	 			   with no parameters.
+    	 	    name: this is basically what an user will see when a conflict occurs 
+    	 	          (when more than 1 class can handle a given file).
+    -->
+    <extension-point id="MEBNIO">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+    </extension-point>
+    
+    <!-- Multi-Entity Bayesian Network' Knowledge Base extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes implementing
+    	 unbbayes.prs.mebn.kb.extension.IKnowledgeBaseBuilder, in order to add new Knowledge
+    	 Base functions into this MEBN
+    	 module. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is the class to implement unbbayes.prs.mebn.kb.extension.IKnowledgeBaseBuilder. 
+    	 		       It MUST provide a default constructor
+    	 			   with no parameters.
+    	 	    name: this is basically a name to identify a Knowledge Base.
+    	 	    optionPanel : this is a panel to be used as a form to fill attributes for this Knowledge Base.
+    	 	           It MUST implement unbbayes.gui.mebn.extension.kb.IKBOptionPanelBuilder.
+    	 	           It MUST provide a default constructor with no parameters.
+    -->
+    <extension-point id="KnowledgeBase">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+        <parameter-def multiplicity="none-or-one" id="optionPanel"/>
+    </extension-point>
+    
+    <!-- Situation Specific Bayesian Network generation extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes implementing
+    	 unbbayes.prs.mebn.ssbn.extension.ISSBNGeneratorBuilder, in order to add new SSBN
+    	 Generation algorithms into this MEBN.
+    	 module. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is a class implementing unbbayes.prs.mebn.ssbn.extension.ISSBNGeneratorBuilder. 
+    	 		       It MUST provide a default constructor with no parameters.
+    	 	    name: this is basically a name to identify a particular SSBN generation algorithm.
+    	 	    optionPanel : this is a panel to be used as a form to fill attributes for this SSBN Algorithm.
+    	 	           It MUST implement unbbayes.gui.mebn.extension.ssbn.ISSBNOptionPanelBuilder.
+    	 	           It MUST provide a default constructor with no parameters.
+    -->
+    <extension-point id="SSBN">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+        <parameter-def multiplicity="none-or-one" id="optionPanel"/>
+    </extension-point>
+    
+    <!-- MEBN editor extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a panel to edit a MEBN and its associated objects
+    	 It must implment unbbayes.gui.mebn.extension.editor.IMEBNEditionPanelBuilder, in order to add new panel
+    	 into this MEBN editor. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is a class implementing unbbayes.gui.mebn.extension.editor.IMEBNEditionPanelBuilder. 
+    	 		       It MUST provide a default constructor with no parameters.
+    	 	    name: this is basically a name to identify a particular panel.
+    	 	    icon: this is an icon for the panel built from class.
+    	 	    description: this is basically a tool tip text for a panel.
+    -->
+    <extension-point id="MEBNEditorPanel">
+        <parameter-def id="class"/>
+        <parameter-def multiplicity="none-or-one" id="name"/>
+        <parameter-def multiplicity="none-or-one" id="icon"/>
+        <parameter-def multiplicity="none-or-one" id="description"/>
+    </extension-point>
+    
+    
+    <!-- MEBN tool panels extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a small thin panel to edit a MEBN and its associated objects,
+    	 and it will be displayed as one of the tabs at the edition panel (left side panel) at
+    	 unbbayes.gui.mebn.MEBNEditionPane.
+    	 It must implment unbbayes.gui.mebn.extension.editor.IMEBNEditionPanelBuilder, in order to add new panel
+    	 into this MEBN editor. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is a class implementing unbbayes.gui.mebn.extension.editor.IMEBNEditionPanelBuilder. 
+    	 		       It MUST provide a default constructor with no parameters.
+    	 	    icon: this is an icon for the panel built from class.
+    	 	    name: this is basically a name to identify a particular panel.
+    	 	    description: this is basically a tool tip text for a panel.
+    -->
+    <extension-point id="MEBNToolPanel">
+        <parameter-def id="class"/>
+        <parameter-def id="name"/>
+        <parameter-def id="icon"/>
+        <parameter-def multiplicity="none-or-one" id="description"/>
+    </extension-point>
+    
+    
+    <!-- 
+    	 PluginNode extension point. 
+    	 Hot plug is enabled.
+    	 This extension point basically declares a new node type for MEBN module and a set of additional informations
+    	 in order to show this node within GUI. Please note that I/O and/or inference algorithms must be implemented 
+    	 separately (see PNIO and InferenceAlgorithm extension points) as a dependent plugin, in order to
+    	 make it possible to compile or save a network containing these new node types.
+    	 
+    	 The arguments are basically:
+    	 	class: class of a node implementing unbbayes.prs.extension.IMEBNPluginNode. 
+    	 	       If so, the class must provide a default constructor with no arguments.
+    	 	       
+    	 	       This parameter may also be a builder extending unbbayes.prs.builder.extension.PluginNodeBuilder
+    	 	       or implementing unbbayes.prs.builder.INodeBuilder. In such case, the builded node must be a instance
+    	 	       of unbbayes.prs.extension.IPluginNode. This approach is useful if the node class does not
+    	 	       provide a default constructor with no arguments. The builder itself must provide a default constructor
+    	 	       with no arguments.
+    	 	       
+    	 	shapeClass: class implementing unbbayes.draw.extension.IPluginUShape, used in order to draw a node into canvas. 
+    	 		   In this case, it must provide a default constructor with no arguments.
+    	 	           	 	       
+    	 	       This parameter may also be a builder implementing unbbayes.draw.extension.IPluginUShapeBuilder.
+    	 	       In this case, the builded node must be a instance
+    	 	       of unbbayes.draw.extension.IPluginUShape. This approach is useful if the shape class does not
+    	 	       provide a default constructor with no arguments. The builder itself must provide a default constructor
+    	 	       with no arguments.
+    	 	       
+    	 	name: the name of the new node type. This is going to be used as a label.
+    	 	
+    	 	panelBuilder: class implementing unbbayes.gui.table.extension.IProbabilityFunctionPanelBuilder. This is basically
+    	 	      a class holding a swing JPanel, displayed to the user in order to edit this node's information, such as
+    	 	      probability distribution functions and other specific details.
+    	 	       
+    	 	description: a brief description of a node type. This is going to be used a tool tip text.
+    	 	       
+    	 	icon: an image (usually gif or png) to be used as an icon. This will be used for buttons.
+    	 	      if not set, a default icon will be used.
+    	 	       
+    	 	cursor: an image (usually gif or png) to be used as a cursor when this new node type
+    	 	      is being selected by the user. The upper left corner (point x = 0, y = 0) will 
+    	 	      be marked as the active point. If not set, a default cursor will be used.
+    	 	
+    -->
+    <extension-point id="MEBNPluginNode">
+        <parameter-def id="class"/>
+        <parameter-def id="shapeClass"/>
+        <parameter-def id="name"/>
+		<parameter-def id="panelBuilder"/>
+		<parameter-def id="description" multiplicity="none-or-one" />
+		<parameter-def id="icon" multiplicity="none-or-one" />
+		<parameter-def id="cursor" multiplicity="none-or-one" />
+    </extension-point>
+    
+    <extension plugin-id="unbbayes.util.extension.core" point-id="Module" id="MEBN">
+        <parameter id="class" value="unbbayes.gui.mebn.MEBNNetworkWindow" />
+        <parameter id="name" value="MEBN" />
+        <parameter id="builder" value="unbbayes.gui.mebn.extension.MEBNWindowBuilder" />
+		<parameter id="description" value="Multi Entity Bayesian Network" />
+		<parameter id="icon" value="new-mebn.png" />
+		<parameter id="category" value="bn" />
+    </extension>
+</plugin>

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<!-- This is a sample I/O plugin for MEBN.  -->
+<plugin id="unbbayes.io.mebn.UbfIO" version="1.0.0">
+    <requires>
+        <import plugin-id="unbbayes.prs.mebn"/>
+    </requires>
+    <extension plugin-id="unbbayes.prs.mebn" point-id="MEBNIO" id="UbfIO">
+        <parameter id="class" value="unbbayes.io.mebn.UbfIO" />
+        <parameter id="name" value="UnBBayes File" />
+    </extension>
+</plugin>
