@@ -1,6 +1,6 @@
 # EM-MEBN-training plug-in
 
-This is a port/adapter of EM-MEBN-training software to a plug-in of UnBBayes.
+This is a port/adapter of EM-MEBN-training software to a plug-in of [UnBBayes](https://sourceforge.net/projects/unbbayes/).
 
 
 ## EM-MEBN-training
