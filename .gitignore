@@ -3,8 +3,5 @@ target/
 
 logs/
 
-in.txt
-
-out.txt
-
 config.cfg
+/bin/
