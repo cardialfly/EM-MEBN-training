@@ -48,9 +48,12 @@ public class EMMEBNResources extends ListResourceBundle {
 
 
 		{"openMEBNFile", "Select MEBN file"},
+		{"openPLMFile", "Select folder with PLMs"},
+		{"openOutputFolder", "Select output folder"},
 		{"InvalidMEBNFile", "MEBN file was not present or it was invalid."},
 		{"InvalidPLMFolder", "PLM folder was not present or it was invalid."},
 		{"InvalidOutputFolder", "Output folder was not present or it was invalid."},
+		{"FailedToCreateOutputFolder", "Could not create output folder. Please, check for permissions."},
 		
 		{"EmptyValue", "Empty or invalid value was provided."},
 		

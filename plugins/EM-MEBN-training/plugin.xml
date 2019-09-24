@@ -11,6 +11,9 @@
         <library type="resources" path="resources/" id="resources">
         	<export prefix="*"/>
         </library>
+        <library type="resources" path="icons/" id="icons">
+        	<export prefix="*"/>
+        </library>
         <library type="code" path="lib/" id="lib">
         	<!-- This is where protege resources resides -->
         	<export prefix="*"/>

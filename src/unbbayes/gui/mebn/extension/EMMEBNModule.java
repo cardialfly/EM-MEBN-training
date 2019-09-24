@@ -165,7 +165,7 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 		}
 		
 		// choose PLM folder
-		File plmFolder = this.showFileChooser(resource.getString("openMEBNFile"), null, JFileChooser.DIRECTORIES_ONLY, new File("models/TsamikoPLMs/"));
+		File plmFolder = this.showFileChooser(resource.getString("openPLMFile"), null, JFileChooser.DIRECTORIES_ONLY, new File("models/TsamikoPLMs/"));
 		if (plmFolder == null
 				|| !plmFolder.exists()
 				|| !plmFolder.isDirectory()) {
@@ -174,11 +174,15 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 		}
 		
 		// choose output folder;
-		File outFolder = this.showFileChooser(resource.getString("openMEBNFile"), null, JFileChooser.DIRECTORIES_ONLY, new File("models/MEBNmodel/TsamikoTrained/"));
-		if (outFolder == null
-				|| !outFolder.exists()
-				|| !outFolder.isDirectory()) {
+		File outFolder = this.showFileChooser(resource.getString("openOutputFolder"), null, JFileChooser.DIRECTORIES_ONLY, new File("models/MEBNmodel/TsamikoTrained/"));
+		if (outFolder == null) {
 			JOptionPane.showMessageDialog(null, resource.getObject("InvalidOutputFolder"));
+			return null;
+		}
+		
+		// make sure directories are created recursively (if not present)
+		if (!outFolder.mkdirs()) {
+			JOptionPane.showMessageDialog(null, resource.getObject("FailedToCreateOutputFolder"));
 			return null;
 		}
 		
@@ -245,14 +249,20 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 		}
 
 		try {
+			// where to include or look for output files
+			String outPath = outFolder.getPath();
+			// make sure it ends with a /, so that path is considered as a folder.
+			if (!outPath.endsWith("/")) {
+				outPath += "/";	
+			}
 			if( val.equals(options[0]) ) {
 				System.out.println("Proceed to inference");
-				getMEBNReasoning().MEBNRunInference(fileexl, mebnFile.getPath(), plmFolder.getPath(), outFolder.getPath(), queryvariablename, ovinstances);
+				getMEBNReasoning().MEBNRunInference(fileexl, mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 			} else {
 				System.out.println("Proceed to training");
-				getMEBNReasoning().MEBNTraining(generalEMIter, fileexl,  mebnFile.getPath(), plmFolder.getPath(), outFolder.getPath(), queryvariablename, ovinstances);
-				String mebnfiletrained = new String( outFolder.getPath() + "/" + getTrainedFileNamePrefix() + fileexl + ".ubf" );
-				getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outFolder.getPath(), queryvariablename, ovinstances);
+				getMEBNReasoning().MEBNTraining(generalEMIter, fileexl,  mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				String mebnfiletrained = new String( outPath  + getTrainedFileNamePrefix() + fileexl + ".ubf" );
+				getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 			}
 		} catch (Exception e) {
 			// print the stack trace to a string (to byte array)
