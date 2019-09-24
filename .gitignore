@@ -4,3 +4,4 @@ target/
 logs/
 
 config.cfg
+/bin/

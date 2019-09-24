@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>gr.iti</groupId>
+	<artifactId>EM-MEBN-training</artifactId>
+	<name>EM-MEBN-training plug-in</name>
+	<!-- If you change the below version, -->
+	<!-- change version and library settings on plugin.xml too, because this is included as library -->
+	<version>0.0.1-SNAPSHOT</version>
+	<url>http://unbbayes.sourceforge.net</url>
+	<licenses>
+		<license>
+			<name> GNU General Public License, Version 3, 29 June 2007</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt
+			</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>giannisChnts</id>
+			<name>Giannis Chantas</name>
+			<email>gchantas@iti.gr</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>CERTH-ITI</organization>
+			<organizationUrl>https://www.iti.gr/iti/people/Giannis_Chantas.html</organizationUrl>
+			<timezone>+3</timezone>
+		</developer>
+		<developer>
+			<id>cardialfly</id>
+			<name>cardialfly</name>
+			<email>cardialfly@gmail.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>George Mason University</organization>
+			<organizationUrl>https://c4i.gmu.edu/</organizationUrl>
+			<timezone>-5</timezone>
+		</developer>
+		<developer>
+			<id>pcyoung75</id>
+			<name>pcyoung75</name>
+			<email>pcyoung75@gmail.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>BAIES LLC</organization>
+			<organizationUrl>https://www.baies.org/</organizationUrl>
+			<timezone>-5</timezone>
+		</developer>
+	</developers>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<descriptors>
+						<descriptor>dist.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<locales>en</locales>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+	
+    <properties>
+        <project.java.version>1.8</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+	
+	<dependencies>
+		<!-- This is a plugin project for unbbayes.prs.mebn -->
+		<dependency>
+			<groupId>br.unb.cic</groupId>
+			<artifactId>unbbayes.prs.mebn</artifactId>
+			<version>1.19.15-SNAPSHOT</version>
+		</dependency> 
+	</dependencies>
+	
+</project>
