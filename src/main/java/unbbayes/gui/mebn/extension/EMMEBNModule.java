@@ -259,6 +259,7 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 			}
 			if( val.equals(options[0]) ) {
 				System.out.println("Proceed to inference");
+				outPath += fileexl + ".txt";
 				getMEBNReasoning().MEBNRunInference(fileexl, mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 			} else {
 				System.out.println("Proceed to training");
@@ -267,6 +268,7 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			// print the stack trace to a string (to byte array)
 			ByteArrayOutputStream stackTraceStream = new ByteArrayOutputStream();
 			e.printStackTrace(new PrintStream(stackTraceStream));
