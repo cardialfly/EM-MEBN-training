@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
-<plugin id="unbbayes.util.extension.core" version="4.11.4"
+<plugin id="unbbayes.util.extension.core" version="4.22.18"
     class="unbbayes.util.extension.PluginCore">
     <runtime>
         <library id="core" path="/" type="code">

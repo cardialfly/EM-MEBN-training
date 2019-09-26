@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
 <!-- This is the plugin descriptor for UnBBayes' MEBN module. -->
-<plugin id="unbbayes.prs.mebn" version="1.13.11">
+<plugin id="unbbayes.prs.mebn" version="1.19.15">
     <requires>
-        <import plugin-id="unbbayes.util.extension.core"/>
+        <import plugin-id="unbbayes.util.extension.core" />
     </requires>
     <runtime>
         <library type="resources" path="icons/" id="icons">
@@ -15,7 +15,7 @@
         </library>
         <!-- It seems that loaders does not work as expected on jar files -->
         <!-- If you change/add the libraries, change/add these library declaration too -->
-        <library id="unbbayes.prs.mebn" path="unbbayes.prs.mebn-1.13.11.jar" type="code" >
+        <library id="unbbayes.prs.mebn" path="unbbayes.prs.mebn-1.19.15.jar" type="code" >
         	<export prefix="*"/>
         </library>
         <library id="iri" path="lib/iri-2.4.jar" type="code">
@@ -36,7 +36,19 @@
         <library id="protege-owl" path="lib/protege-owl-3.2.jar" type="code">
         	<export prefix="*"/>
         </library>
+        <library id="icu4j" path="lib/icu4j-3.8.jar" type="code">
+        	<export prefix="*"/>
+        </library>
         <library id="xercesImpl" path="lib/xercesImpl-2.8.1.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="rsyntaxtextarea" path="lib/rsyntaxtextarea-2.6.1.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="autocomplete" path="lib/autocomplete-2.6.1.jar" type="code">
+        	<export prefix="*"/>
+        </library>
+        <library id="rstaui" path="lib/rstaui-2.6.0.jar" type="code">
         	<export prefix="*"/>
         </library>
     </runtime>
@@ -70,11 +82,15 @@
     	 	    optionPanel : this is a panel to be used as a form to fill attributes for this Knowledge Base.
     	 	           It MUST implement unbbayes.gui.mebn.extension.kb.IKBOptionPanelBuilder.
     	 	           It MUST provide a default constructor with no parameters.
+    	 	    toolbar : this is a toolbar with options of the knowledge base. 
+    	 	           It MUST implement unbbayes.gui.mebn.extension.kb.IKBToolBarBuilder.
+    	 	           It MUST provide a default constructor with no parameters.       
     -->
     <extension-point id="KnowledgeBase">
         <parameter-def id="class"/>
         <parameter-def id="name"/>
         <parameter-def multiplicity="none-or-one" id="optionPanel"/>
+        <parameter-def multiplicity="none-or-one" id="toolbar"/>
     </extension-point>
     
     <!-- Situation Specific Bayesian Network generation extension point. 
@@ -96,6 +112,7 @@
         <parameter-def id="name"/>
         <parameter-def multiplicity="none-or-one" id="optionPanel"/>
     </extension-point>
+    
     
     <!-- MEBN editor extension point. 
      	 Hot plug is enabled.
@@ -192,6 +209,40 @@
 		<parameter-def id="cursor" multiplicity="none-or-one" />
     </extension-point>
     
+    
+    <!-- User-defined LPD function extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes which implements
+    	 unbbayes.prs.mebn.compiler.extension.IUserDefinedFunctionBuilder, in order to add new
+    	 user-defined LPD functions to compilers of LPD scripts of this MEBN
+    	 module. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is a class implementing unbbayes.prs.mebn.compiler.extension.IUserDefinedFunctionBuilder. 
+    	 		       It MUST provide a default constructor with no parameters.
+    	 	         
+    -->
+    <extension-point id="UserDefinedLPDFunction">
+        <parameter-def id="class"/>
+    </extension-point>
+    
+    <!-- User-defined boolean LPD function extension point. 
+     	 Hot plug is enabled.
+    	 This extension point is basically a set of different classes which implements
+    	 unbbayes.prs.mebn.compiler.extension.IUserDefinedBooleanFunctionBuilder, in order to add new
+    	 user-defined boolean LPD functions (i.e. functions that can be called inside "if" tests) to compilers of LPD scripts of this MEBN
+    	 module. The class must contain a public default constructor (no parameters).
+    	 	Parameters:
+    	 		class: this is a class implementing unbbayes.prs.mebn.compiler.extension.IUserDefinedBooleanFunctionBuilder 
+    	 		       It MUST provide a default constructor with no parameters.
+    	 	         
+    -->
+    <extension-point id="UserDefinedBooleanLPDFunction">
+        <parameter-def id="class"/>
+    </extension-point>
+    
+    
+    
+    
     <extension plugin-id="unbbayes.util.extension.core" point-id="Module" id="MEBN">
         <parameter id="class" value="unbbayes.gui.mebn.MEBNNetworkWindow" />
         <parameter id="name" value="MEBN" />
@@ -199,5 +250,11 @@
 		<parameter id="description" value="Multi Entity Bayesian Network" />
 		<parameter id="icon" value="new-mebn.png" />
 		<parameter id="category" value="bn" />
+    </extension>
+    
+   <!-- TODO migrate the following to another plugin.xml, or else version numbers of this plug-in cannot evolve independently to version numbers of MEBN plug-in -->
+   <extension plugin-id="unbbayes.prs.mebn" point-id="SSBN" id="BayesBall">
+        <parameter id="class" value="unbbayes.prs.mebn.ssbn.bayesballalgorithm.BayesBallSSBNGeneratorBuilder" />
+        <parameter id="name" value="Bayes-Ball" />
     </extension>
 </plugin>
