@@ -143,7 +143,14 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 					getIO().getSupportedFileExtensions(true),
 					getIO().getSupportedFilesDescription(true));
 			File mebnFile = this.showFileChooser(resource.getString("openMEBNFile"), fileFilter, JFileChooser.FILES_ONLY, new File("models/MEBNmodel/MEBNMultimodalTsamikoUntrained.ubf"));
-			this.openFile(mebnFile);
+			UnBBayesModule resultWindow = this.openFile(mebnFile);
+			if (unbbayesFrame != null && resultWindow != null) {
+				unbbayesFrame.addWindow(resultWindow);
+				resultWindow.setVisible(true);
+				resultWindow.updateUI();
+				unbbayesFrame.repaint();
+				resultWindow.repaint();
+			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 			JOptionPane.showMessageDialog(null, t.toString());
@@ -276,15 +283,15 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				// instantiate the MEBN module to show
 				
 				// show additional result if frame is accessible
-//				UnBBayesFrame frame = getUnbbayesFrame();
-//				if (frame != null) {
-//					MEBNNetworkWindow resultWindow = new MEBNNetworkWindow((Network) getIO().load(correctedFile));
-//					frame.addWindow(resultWindow);
-//					resultWindow.setVisible(true);
-//					resultWindow.updateUI();
-//					frame.repaint();
-//					resultWindow.repaint();
-//				}
+				UnBBayesFrame frame = getUnbbayesFrame();
+				if (frame != null) {
+					MEBNNetworkWindow resultWindow = new MEBNNetworkWindow((Network) getIO().load(correctedFile));
+					frame.addWindow(resultWindow);
+					resultWindow.setVisible(true);
+					resultWindow.updateUI();
+					frame.repaint();
+					resultWindow.repaint();
+				}
 				
 				JOptionPane.showMessageDialog(null, resource.getObject("OutputGeneratedAt") + outFolder.getPath());
 				
