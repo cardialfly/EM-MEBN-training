@@ -278,7 +278,7 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				// show additional result if frame is accessible
 //				UnBBayesFrame frame = getUnbbayesFrame();
 //				if (frame != null) {
-//					MEBNNetworkWindow resultWindow = new MEBNNetworkWindow((Network) getIO().load(trainedFile));
+//					MEBNNetworkWindow resultWindow = new MEBNNetworkWindow((Network) getIO().load(correctedFile));
 //					frame.addWindow(resultWindow);
 //					resultWindow.setVisible(true);
 //					resultWindow.updateUI();
@@ -289,7 +289,7 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				JOptionPane.showMessageDialog(null, resource.getObject("OutputGeneratedAt") + outFolder.getPath());
 				
 				// return result of training as the main result for this plug-in.
-				return new MEBNNetworkWindow((Network) getIO().load(correctedFile));
+				return new MEBNNetworkWindow((Network) getIO().load(trainedFile));
 						
 			}
 		} catch (Exception e) {
