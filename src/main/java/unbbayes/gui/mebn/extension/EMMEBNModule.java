@@ -2,6 +2,7 @@ package unbbayes.gui.mebn.extension;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collections;
@@ -13,16 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import unbbayes.controller.FileHistoryController;
-import unbbayes.gui.FileIcon;
 import unbbayes.gui.SimpleFileFilter;
 import unbbayes.gui.UnBBayesFrame;
+import unbbayes.gui.mebn.MEBNNetworkWindow;
+import unbbayes.gui.mebn.extension.output.OutputRenderer;
 import unbbayes.io.BaseIO;
 import unbbayes.io.OwnerAwareFileExtensionIODelegator;
-import unbbayes.io.mebn.MebnIO;
 import unbbayes.io.mebn.UbfIO;
 import unbbayes.prs.Graph;
+import unbbayes.prs.Network;
 import unbbayes.prs.mebn.em.MEBNReasoning;
-import unbbayes.util.Debug;
 import unbbayes.util.extension.UnBBayesModule;
 import unbbayes.util.extension.UnBBayesModuleBuilder;
 
@@ -32,6 +33,8 @@ import unbbayes.util.extension.UnBBayesModuleBuilder;
  */
 public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilder {
 
+
+	private static final long serialVersionUID = 8220905766834077012L;
 
 	private String name = "EM-MEBN-training";
 	
@@ -261,11 +264,33 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				System.out.println("Proceed to inference");
 				outPath += fileexl + ".txt";
 				getMEBNReasoning().MEBNRunInference(fileexl, mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				
+				OutputRenderer.showRenderedOutput(new FileInputStream(new File(outPath)));
+//				return null;
 			} else {
 				System.out.println("Proceed to training");
-				getMEBNReasoning().MEBNTraining(generalEMIter, fileexl,  mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				File trainedFile = getMEBNReasoning().MEBNTraining(generalEMIter, fileexl,  mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 				String mebnfiletrained = new String( outPath  + getTrainedFileNamePrefix() + fileexl + ".ubf" );
-				getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				File correctedFile = getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				
+				// instantiate the MEBN module to show
+				
+				// show additional result if frame is accessible
+//				UnBBayesFrame frame = getUnbbayesFrame();
+//				if (frame != null) {
+//					MEBNNetworkWindow resultWindow = new MEBNNetworkWindow((Network) getIO().load(trainedFile));
+//					frame.addWindow(resultWindow);
+//					resultWindow.setVisible(true);
+//					resultWindow.updateUI();
+//					frame.repaint();
+//					resultWindow.repaint();
+//				}
+				
+				JOptionPane.showMessageDialog(null, resource.getObject("OutputGeneratedAt") + outFolder.getPath());
+				
+				// return result of training as the main result for this plug-in.
+				return new MEBNNetworkWindow((Network) getIO().load(correctedFile));
+						
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

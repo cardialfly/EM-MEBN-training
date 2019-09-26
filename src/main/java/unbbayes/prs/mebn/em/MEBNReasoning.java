@@ -1131,7 +1131,7 @@ int countstep=0,countgender=0,countsync=0;
 }
 
 
-public void MEBNTraining(int generalEMIter,  int fileexl, String MEBNfile, String PLMfolder, String MEBNoutputfolder,String queryvariablename,String[] ovinstances) throws Exception {
+public File MEBNTraining(int generalEMIter,  int fileexl, String MEBNfile, String PLMfolder, String MEBNoutputfolder,String queryvariablename,String[] ovinstances) throws Exception {
 	
 	textModeRunner = new TextModeRunner();
 	//File mebnFile = new File("C:/Users/gchantas/Desktop/unbbayes-4.18.10/examples/Tsamiko/TsamikoMEBNDownbeats.ubf");
@@ -1150,7 +1150,7 @@ public void MEBNTraining(int generalEMIter,  int fileexl, String MEBNfile, Strin
 	if (  mebnFile == null || !mebnFile.exists()   )
 	{
 		System.out.println("File " + mebnFile + " does not exist");
-		return;
+		return mebnFile;
 	}
 		
 	System.out.println(  "Opening File = " + mebnFile.getAbsolutePath()  );
@@ -1623,11 +1623,13 @@ for (  int kl=0; kl<filelist.size(); kl++   )
 	//mebnfileGMMinfo.close();
 	ubf.saveMebn(mebnfile, mebn);
 	mebnUtil.clearKnowledgeBase();
+	
+	return mebnFile;
 }
 
 
 
-public void MEBNCorrection(  int filenum,String MEBNfile, String PLMfolder, String MEBNoutputfolder,String queryvariablename,String[] ovinstances) throws Exception {
+public File MEBNCorrection(  int filenum,String MEBNfile, String PLMfolder, String MEBNoutputfolder,String queryvariablename,String[] ovinstances) throws Exception {
 
 
 	textModeRunner = new TextModeRunner();
@@ -1876,6 +1878,8 @@ List<ResidentNode> ResidentNodes = mebn.getDomainResidentNodes();
 
 	ubf.saveMebn(mebnfilenew, mebn);
 	mebnUtil.clearKnowledgeBase();
+	
+	return mebnfilenew;
 }
 
 
