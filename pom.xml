@@ -73,12 +73,6 @@
 					</descriptors>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<locales>en</locales>
-				</configuration>
-			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -103,6 +97,12 @@
 			<artifactId>unbbayes.prs.mebn</artifactId>
 			<version>1.19.15-SNAPSHOT</version>
 		</dependency> 
+		<dependency>
+		  <groupId>com.sun.xml.ws</groupId>
+		  <artifactId>jaxws-ri</artifactId>
+		  <version>2.3.0</version>
+		  <type>pom</type>
+		</dependency>
 	</dependencies>
 	
 </project>
