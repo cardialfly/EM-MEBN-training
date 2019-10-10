@@ -24,8 +24,41 @@
 			<roles>
 				<role>Developer</role>
 			</roles>
-			<organization>CERTH-ITI</organization>
-			<organizationUrl>https://www.iti.gr/iti/people/Giannis_Chantas.html</organizationUrl>
+			<organization>Centre of Research and Technology, Hellas - Information Technologies Institute</organization>
+			<organizationUrl>https://www.iti.gr/</organizationUrl>
+			<timezone>+3</timezone>
+		</developer>
+		<developer>
+			<id>Spiros Nikolopoulos</id>
+			<name>Spiros Nikolopoulos</name>
+			<email>nikolopo@iti.gr</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Centre of Research and Technology, Hellas - Information Technologies Institute</organization>
+			<organizationUrl>https://www.iti.gr/</organizationUrl>
+			<timezone>+3</timezone>
+		</developer>
+		<developer>
+			<id>Ioannis Kompatsiaris</id>
+			<name>Ioannis Kompatsiaris</name>
+			<email>ikom@iti.gr</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Centre of Research and Technology, Hellas - Information Technologies Institute</organization>
+			<organizationUrl>https://www.iti.gr/</organizationUrl>
+			<timezone>+3</timezone>
+		</developer>
+		<developer>
+			<id>Sotiris Karavarsamis</id>
+			<name>Sotiris Karavarsamis</name>
+			<email>s.karavarsamis@gmail.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Centre of Research and Technology, Hellas - Information Technologies Institute</organization>
+			<organizationUrl>https://www.iti.gr/</organizationUrl>
 			<timezone>+3</timezone>
 		</developer>
 		<developer>
