@@ -3,6 +3,7 @@
 ![Screenshot](https://github.com/cardialfly/EM-MEBN-training/blob/master/src/test/resources/EM_MEBN.PNG?raw=true)
 
 This is a port/adapter of EM-MEBN-training software to a plug-in of [UnBBayes](https://sourceforge.net/projects/unbbayes/).
+Please, find original project (where this project is forked from) at: [https://github.com/giannisChnts/EM-MEBN-training](https://github.com/giannisChnts/EM-MEBN-training).
 
 
 ## EM-MEBN-training
