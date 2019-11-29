@@ -278,8 +278,9 @@ public class EMMEBNModule extends UnBBayesModule implements UnBBayesModuleBuilde
 				System.out.println("Proceed to training");
 				File trainedFile = getMEBNReasoning().MEBNTraining(generalEMIter, fileexl,  mebnFile.getPath(), plmFolder.getPath(), outPath, queryvariablename, ovinstances);
 				String mebnfiletrained = new String( outPath  + getTrainedFileNamePrefix() + fileexl + ".ubf" );
-				File correctedFile = getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
-				
+//				File correctedFile = getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath, queryvariablename, ovinstances);
+				File correctedFile = getMEBNReasoning().MEBNCorrection(fileexl, mebnfiletrained, plmFolder.getPath(), outPath);
+
 				// instantiate the MEBN module to show
 				
 				// show additional result if frame is accessible
