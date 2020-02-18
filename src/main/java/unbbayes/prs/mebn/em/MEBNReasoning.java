@@ -1073,7 +1073,7 @@ public File MEBNTraining(int generalEMIter,  int fileexl, String MEBNfile, Strin
 		ObjectEntity timeEntity = mebn.getObjectEntityContainer().getObjectEntityByType(queryNode.getArgumentList().get(0).getOVariable().getValueType());
 
 		// access all the instances of this entities
-		Set<ObjectEntityInstance> instances = timeEntity.getInstanceList();
+		Collection<ObjectEntityInstance> instances = timeEntity.getInstanceList();
 		
 		int count=0;
 		for(ObjectEntityInstance oei:instances  )
@@ -1436,7 +1436,7 @@ public File MEBNCorrection(  int filenum,String MEBNfile, String PLMfolder, Stri
 		ObjectEntity timeEntity = mebn.getObjectEntityContainer().getObjectEntityByType(queryNode.getArgumentList().get(0).getOVariable().getValueType());
 
 		// access all the instances of this entities
-		Set<ObjectEntityInstance> instances = timeEntity.getInstanceList();
+		Collection<ObjectEntityInstance> instances = timeEntity.getInstanceList();
 		
 		int count=0;
 		for(ObjectEntityInstance oei:instances  )

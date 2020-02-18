@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -71,7 +72,7 @@ public class MebnUtilLoadFindingsTest {
 		ObjectEntity timeEntity = mebn.getObjectEntityContainer().getObjectEntityByName("TimeStep");
 
 		// access all the instances of this entities
-		Set<ObjectEntityInstance> instances = timeEntity.getInstanceList();
+		Collection<ObjectEntityInstance> instances = timeEntity.getInstanceList();
 		assertNotNull(instances);
 		// T1 - T177
 		assertEquals(177, instances.size());
